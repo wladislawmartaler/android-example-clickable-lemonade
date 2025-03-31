@@ -17,7 +17,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -42,92 +42,57 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun LemonApp() {
-
-    var currentStep by remember { mutableStateOf(1) }
+    var currentStep by remember { mutableIntStateOf(1) }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
-    ){
+    ) {
         when (currentStep) {
-            1 -> {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxSize()
-                ){
-                    Text(text = stringResource(R.string.lemon_tree))
-                    Spacer(modifier = Modifier.height(32.dp))
-                    Image(
-                        painter = painterResource(R.drawable.lemon_tree),
-                        contentDescription = stringResource(R.string.lemon_tree),
-                        modifier = Modifier
-                            .wrapContentSize()
-                            .clickable{
-                                currentStep = 2
-                            }
-                    )
-                }
-            }
-            2 -> {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxSize()
-                ){
-                    Text(text = stringResource(R.string.lemon_squeeze))
-                    Spacer(modifier = Modifier.height(32.dp))
-                    Image(
-                        painter = painterResource(R.drawable.lemon_squeeze),
-                        contentDescription = stringResource(R.string.lemon_squeeze),
-                        modifier = Modifier
-                            .wrapContentSize()
-                            .clickable{
-                                currentStep = 3
-                            }
+            1 -> LemonStep(
+                textResId = R.string.lemon_tree,
+                imageResId = R.drawable.lemon_tree
+            ) { currentStep = 2 }
 
-                    )
-                }
-            }
-            3 -> {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxSize()
-                ){
-                    Text(text = stringResource(R.string.lemon_drink))
-                    Spacer(modifier = Modifier.height(32.dp))
-                    Image(
-                        painter = painterResource(R.drawable.lemon_drink),
-                        contentDescription = stringResource(R.string.lemon_drink),
-                        modifier = Modifier
-                            .wrapContentSize()
-                            .clickable{
-                                currentStep = 4
-                            }
-                        )
-                }
-            }
-            4 -> {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxSize()
-                ){
-                    Text(text = stringResource(R.string.lemon_restart))
-                    Spacer(modifier = Modifier.height(32.dp))
-                    Image(
-                        painter = painterResource(R.drawable.lemon_restart),
-                        contentDescription = stringResource(R.string.lemon_restart),
-                        modifier = Modifier
-                            .wrapContentSize()
-                            .clickable{
-                                currentStep = 1
-                            }
-                    )
-                }
-            }
+            2 -> LemonStep(
+                textResId = R.string.lemon_squeeze,
+                imageResId = R.drawable.lemon_squeeze
+            ) { currentStep = 3 }
+
+            3 -> LemonStep(
+                textResId = R.string.lemon_drink,
+                imageResId = R.drawable.lemon_drink
+            ) { currentStep = 4 }
+
+            4 -> LemonStep(
+                textResId = R.string.lemon_restart,
+                imageResId = R.drawable.lemon_restart
+            ) { currentStep = 1 }
         }
+    }
+}
+
+
+@Composable
+fun LemonStep(
+    textResId: Int,
+    imageResId: Int,
+    onImageClick: () -> Unit
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Text(text = stringResource(textResId))
+        Spacer(modifier = Modifier.height(32.dp))
+        Image(
+            painter = painterResource(imageResId),
+            contentDescription = stringResource(textResId),
+            modifier = Modifier
+                .wrapContentSize()
+                .clickable { onImageClick() }
+        )
     }
 }
 
