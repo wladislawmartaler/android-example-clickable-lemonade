@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Lemonade</string>
+    <string name="lemon_tree">Ernte eine Zitrone vom Baum</string>
+    <string name="lemon_squeeze">Presse den Saft aus der Zitrone</string>
+    <string name="lemon_drink">Trinke die Limonade</string>
+    <string name="lemon_restart">Starte erneut</string>
+</resources>
